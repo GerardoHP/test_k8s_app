@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.EntityFrameworkCore;
 using testK8sApp.Web;
 using testK8sApp.Web.Data;
@@ -10,19 +11,28 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddApiVersioning();
 
+// Add versioning
+builder.Services
+    .AddApiVersioning(opt =>
+    {
+        opt.AssumeDefaultVersionWhenUnspecified = true;
+        opt.DefaultApiVersion = new ApiVersion(1, 0);
+        // opt.ApiVersionReader = new UrlSegmentApiVersionReader();
+        opt.ApiVersionReader = new QueryStringApiVersionReader("v");
+        opt.ReportApiVersions = true;
+    })
+    .AddMvc();
+
+// Add configuration to work with k8s and get the current working node
 Info info = new();
 builder.Configuration.GetSection(Info.SectionName).Bind(info);
 builder.Services.AddSingleton(info);
 
+// Add configuration to work with postgres with ef core
 string connStr = builder.Configuration.GetConnectionString("Postgres_Db") ?? 
                  throw new ArgumentNullException($"no connection string");
 builder.Services.AddDbContext<BloggingContext>(o => o.UseNpgsql(connStr));
-#if DEBUG
-
-
-#endif
 
 var app = builder.Build();
 
