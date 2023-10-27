@@ -11,6 +11,7 @@ import (
 
 func main() {
 	lis, err := net.Listen("tcp", ":8080")
+	fmt.Println("now listening")
 	if err != nil {
 		log.Fatalf("Failed to listen: %v \n", err)
 	}
@@ -20,6 +21,4 @@ func main() {
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v \n", err)
 	}
-
-	fmt.Println("now listening")
 }

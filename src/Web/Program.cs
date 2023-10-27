@@ -34,6 +34,9 @@ string connStr = builder.Configuration.GetConnectionString("Postgres_Db") ??
                  throw new ArgumentNullException($"no connection string");
 builder.Services.AddDbContext<BloggingContext>(o => o.UseNpgsql(connStr));
 
+// Add gRpc client
+builder.Services.AddTransient<Client>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

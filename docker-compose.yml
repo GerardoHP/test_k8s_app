@@ -11,3 +11,25 @@ services:
       - 5432:5432
     volumes:
       - ./.pg-data:/var/lib/postgresql/data/
+  go_service:
+    image: gerardohp/testk8s_grpc
+    build:
+      context: src/dateService/
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+  dotnet_service:
+    image: gerardohp/testk8s_web
+    build:
+      context: src/Web/
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      Info__ContainerId: $HOSTNAME
+      Info__GrpcServiceUrl: http://go_service:8080
+      ConnectionStrings__Postgres_Db: "Host=develop_db;Port=5432;Database=blogging;Username=dotnet;Password=example;"
+    depends_on:
+      - develop_db
+      - go_service

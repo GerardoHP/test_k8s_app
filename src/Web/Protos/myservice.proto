@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/GerardoHP/test_k8s_app/src/dateService";
+
+option csharp_namespace = "testK8sApp.Web.Protos";
+
+service MyService{
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest{
+  string name = 1;
+}
+
+message HelloResponse{
+  string message = 1;
+}
