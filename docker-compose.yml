@@ -1,0 +1,10 @@
+services: 
+  develop_db:
+    image: postgres:alpine3.18
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: dotnet
+      POSTGRES_DB: blogging
+    ports:
+      - 5432:5432
