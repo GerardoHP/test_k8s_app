@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using testK8sApp.Web.Data;
 
 #nullable disable
 

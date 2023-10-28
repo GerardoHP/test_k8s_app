@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace testK8sApp.Web.Data;
+namespace testk8sApp.Data;
 
 public class BloggingContext : DbContext
 {
@@ -9,7 +9,14 @@ public class BloggingContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseSerialColumns();
-        modelBuilder.Entity<ProofOfLife>().HasData(new List<ProofOfLife>() { new() { Id = Guid.Parse("00000000-0000-0000-0000-000000000001") } });
+        modelBuilder.Entity<ProofOfLife>()
+            .HasData(new List<ProofOfLife>()
+            {
+                new()
+                {
+                    Id = Guid.Parse("00000000-0000-0000-0000-000000000001")
+                }
+            });
     }
     
     public DbSet<Blog> Blogs { get; set; }

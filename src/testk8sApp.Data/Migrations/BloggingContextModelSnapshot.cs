@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using testK8sApp.Web.Data;
+using testk8sApp.Data;
 
 #nullable disable
 
 namespace testK8sApp.Web.Migrations
 {
     [DbContext(typeof(BloggingContext))]
-    [Migration("20231027024911_ProofOfLifeMigration")]
-    partial class ProofOfLifeMigration
+    partial class BloggingContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

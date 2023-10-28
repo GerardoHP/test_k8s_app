@@ -21,15 +21,26 @@ services:
   dotnet_service:
     image: gerardohp/testk8s_web
     build:
-      context: src/Web/
-      dockerfile: Dockerfile
+      context: src/
+      dockerfile: Web/Dockerfile
     ports:
       - 80:80
       - 443:443
     environment:
       Info__ContainerId: $HOSTNAME
       Info__GrpcServiceUrl: http://go_service:8080
-      ConnectionStrings__Postgres_Db: "Host=develop_db;Port=5432;Database=blogging;Username=dotnet;Password=example;"
+      ConnectionStrings__Postgres_Db: "Host=postgres_db;Port=5432;Database=blogging;Username=dotnet;Password=superSecurePassword;"
     depends_on:
       - develop_db
       - go_service
+  postgres_db:
+    image: gerardohp/k8stest_db
+    build:
+      context: src/
+      dockerfile: ../database.Dockerfile
+    environment:
+      POSTGRES_PASSWORD: superSecurePassword
+      POSTGRES_USER: dotnet
+      POSTGRES_DB: blogging
+    ports:
+      - 5432:5432
