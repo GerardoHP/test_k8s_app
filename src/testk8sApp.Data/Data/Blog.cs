@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace testK8sApp.Web.Data;
+namespace testk8sApp.Data.Data;
 
 [Table("blog")]
 public class Blog

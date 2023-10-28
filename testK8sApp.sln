@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D1BD03E1-EC1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testK8sApp.Web", "src\Web\testK8sApp.Web.csproj", "{3417082F-833A-43AD-8966-99F87F74FD99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testk8sApp.Data", "src\testk8sApp.Data\testk8sApp.Data.csproj", "{40475395-158C-4BF5-9F64-2B7CBC2E92F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{3417082F-833A-43AD-8966-99F87F74FD99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3417082F-833A-43AD-8966-99F87F74FD99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3417082F-833A-43AD-8966-99F87F74FD99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40475395-158C-4BF5-9F64-2B7CBC2E92F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40475395-158C-4BF5-9F64-2B7CBC2E92F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40475395-158C-4BF5-9F64-2B7CBC2E92F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40475395-158C-4BF5-9F64-2B7CBC2E92F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3417082F-833A-43AD-8966-99F87F74FD99} = {D1BD03E1-EC1F-48F8-A4A6-173B04FC14EC}
+		{40475395-158C-4BF5-9F64-2B7CBC2E92F4} = {D1BD03E1-EC1F-48F8-A4A6-173B04FC14EC}
 	EndGlobalSection
 EndGlobal

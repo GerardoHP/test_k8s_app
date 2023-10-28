@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace testK8sApp.Web.Data;
+namespace testk8sApp.Data.Data;
 
 public class BloggingContext : DbContext
 {

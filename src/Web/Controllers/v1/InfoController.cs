@@ -1,6 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using testK8sApp.Web.Data;
+using testk8sApp.Data.Data;
 
 namespace testK8sApp.Web.Controllers.v1;
 
