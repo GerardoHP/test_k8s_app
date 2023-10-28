@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace testk8sApp.Data.Data;
+namespace testk8sApp.Data;
 
 public class BloggingContext : DbContext
 {
     public BloggingContext(DbContextOptions<BloggingContext> options) :base(options){}
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

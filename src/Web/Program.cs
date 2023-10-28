@@ -1,6 +1,6 @@
 using Asp.Versioning;
 using Microsoft.EntityFrameworkCore;
-using testk8sApp.Data.Data;
+using testk8sApp.Data;
 using testK8sApp.Web;
 
 var builder = WebApplication.CreateBuilder(args);
