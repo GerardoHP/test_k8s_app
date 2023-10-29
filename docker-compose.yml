@@ -1,6 +1,8 @@
 services: 
   develop_db:
     image: postgres:alpine3.18
+    profiles:
+      - development
     restart: always
     environment:
       POSTGRES_PASSWORD: example
@@ -27,11 +29,11 @@ services:
       - 80:80
       - 443:443
     environment:
-      Info__ContainerId: $HOSTNAME
+      Info__ContainerId: ${HOSTNAME}
       Info__GrpcServiceUrl: http://go_service:8080
       ConnectionStrings__Postgres_Db: "Host=postgres_db;Port=5432;Database=blogging;Username=dotnet;Password=superSecurePassword;"
     depends_on:
-      - develop_db
+      - postgres_db
       - go_service
   postgres_db:
     image: gerardohp/k8stest_db
