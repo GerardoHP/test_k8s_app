@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blogging-db
+  labels:
+    app: blogging-db
+spec:
+  selector:
+    matchLabels:
+      app: blogging-db
+  template:
+    metadata:
+      labels:
+        app: blogging-db
+    spec:
+      containers:
+      - name: blogging-db
+        image: gerardohp/k8stest_db
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_PASSWORD
+            value: superSecurePassword
+          - name: POSTGRES_USER
+            value: dotnet
+          - name: POSTGRES_DB
+            value: blogging
+

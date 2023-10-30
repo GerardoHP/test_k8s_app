@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-service
+  labels: 
+    app: dotnet-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dotnet-service
+  template:
+    metadata:
+      labels:
+        app: dotnet-service
+    spec:
+      containers:
+      - name: dotnet-service
+        image: gerardohp/testk8s_web
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        readinessProbe:
+          httpGet:
+            path: /api/info/version
+            port: 80
+        livenessProbe:
+          httpGet:
+            path: /api/info/proofOfLife
+            port: 80
+        env:
+          - name: Info__ContainerId
+            value: ${HOSTNAME}
+          - name: Info__GrpcServiceUrl
+            value: http://go-service:8080
+          - name: ConnectionStrings__Postgres_Db
+            value: "Host=blogging-db;Port=5432;Database=blogging;Username=dotnet;Password=superSecurePassword;"
