@@ -23,6 +23,9 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 5432
+        volumeMounts:
+        - name: pg-data
+          mountPath: /var/lib/postgresql/data/
         env:
           - name: POSTGRES_PASSWORD
             value: superSecurePassword
@@ -30,4 +33,8 @@ spec:
             value: dotnet
           - name: POSTGRES_DB
             value: blogging
-
+      volumes:
+      - name: pg-data
+        hostPath: 
+          path: /Users/gerardohernandez/test_k8s_app/pg-data
+          type: DirectoryOrCreate
