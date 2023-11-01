@@ -24,7 +24,7 @@ spec:
         ports:
         - containerPort: 5432
         volumeMounts:
-        - name: pg-data
+        - name: pg-data-pvc
           mountPath: /var/lib/postgresql/data/
         env:
           - name: POSTGRES_PASSWORD
@@ -34,7 +34,6 @@ spec:
           - name: POSTGRES_DB
             value: blogging
       volumes:
-      - name: pg-data
-        hostPath: 
-          path: /Users/gerardohernandez/test_k8s_app/pg-data
-          type: DirectoryOrCreate
+      - name: pg-data-pvc
+        persistentVolumeClaim:
+          claimName: pg-data-rw
