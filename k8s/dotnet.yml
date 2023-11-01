@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dotnet-service
+  namespace: test-k8s-app
   labels: 
     app: dotnet-service
 spec:
@@ -35,8 +36,28 @@ spec:
             port: 80
         env:
           - name: Info__ContainerId
-            value: ${HOSTNAME}
+            valueFrom:
+              fieldRef:
+               fieldPath: metadata.name
           - name: Info__GrpcServiceUrl
             value: http://go-service:8080
           - name: ConnectionStrings__Postgres_Db
             value: "Host=blogging-db;Port=5432;Database=blogging;Username=dotnet;Password=superSecurePassword;"
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-service
+  namespace: test-k8s-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: dotnet-service
+  ports:
+    - port: 80
+      targetPort: 80
+      name: regular
+    - port: 443
+      targetPort: 443
+      name: secure

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blogging-db
+  namespace: test-k8s-app
   labels:
     app: blogging-db
 spec:
@@ -37,3 +38,50 @@ spec:
       - name: pg-data-pvc
         persistentVolumeClaim:
           claimName: pg-data-rw
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blogging-db
+  namespace: test-k8s-app
+  labels:
+    app: blogging-db
+spec:
+  selector:
+    app: blogging-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pg-data-rw
+  namespace: test-k8s-app
+spec:
+  resources:
+    requests:
+      storage: 150Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pg-data
+  namespace: test-k8s-app
+spec:
+  capacity:
+    storage: 200Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /Users/gerardohernandez/test_k8s_app/pg-data
+    type: DirectoryOrCreate
