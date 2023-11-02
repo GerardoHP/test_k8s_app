@@ -1,0 +1,96 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: pg-local-storage
+provisioner: kubernetes.io/no-provisioner  
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pg-data
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: pg-local-storage
+  local:
+    path: /Users/gerardohernandez/Repos/tmp/store
+    fsType: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - docker-desktop
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pg-data-rw
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: pg-local-storage
+  resources:
+    requests:
+      storage: 500Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blogging-db
+  labels:
+    app: blogging-db
+spec:
+  selector:
+    app: blogging-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+      
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: blogging-db
+  labels:
+    app: blogging-db
+spec:
+  serviceName: blogging-db
+  selector:
+    matchLabels:
+      app: blogging-db
+  template:
+    metadata:
+      labels:
+        app: blogging-db
+    spec:
+      containers:
+      - name: blogging-db
+        image: gerardohp/k8stest_db
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: pg-data-pvc
+          mountPath: /var/lib/postgresql/data/
+        envFrom:
+          - configMapRef:
+              name: k8s-test-env
+      volumes:
+      - name: pg-data-pvc
+        persistentVolumeClaim:
+          claimName: pg-data-rw
