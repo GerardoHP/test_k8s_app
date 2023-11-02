@@ -38,10 +38,9 @@ spec:
             valueFrom:
               fieldRef:
                fieldPath: metadata.name
-          - name: Info__GrpcServiceUrl
-            value: http://go-service:8080
-          - name: ConnectionStrings__Postgres_Db
-            value: "Host=blogging-db;Port=5432;Database=blogging;Username=dotnet;Password=superSecurePassword;"
+        envFrom:
+          - configMapRef:
+              name: k8s-test-env
             
 ---
 apiVersion: v1

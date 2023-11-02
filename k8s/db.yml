@@ -87,13 +87,9 @@ spec:
         volumeMounts:
         - name: pg-data-pvc
           mountPath: /var/lib/postgresql/data/
-        env:
-          - name: POSTGRES_PASSWORD
-            value: superSecurePassword
-          - name: POSTGRES_USER
-            value: dotnet
-          - name: POSTGRES_DB
-            value: blogging
+        envFrom:
+          - configMapRef:
+              name: k8s-test-env
       volumes:
       - name: pg-data-pvc
         persistentVolumeClaim:
