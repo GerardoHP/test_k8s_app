@@ -38,6 +38,11 @@ spec:
             valueFrom:
               fieldRef:
                fieldPath: metadata.name
+          - name: ConnectionStrings__Postgres_Db
+            valueFrom:
+              secretKeyRef:
+                key: ConnectionStrings__Postgres_Db
+                name: pg-connection
         envFrom:
           - configMapRef:
               name: k8s-test-env

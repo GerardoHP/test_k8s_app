@@ -87,10 +87,31 @@ spec:
         volumeMounts:
         - name: pg-data-pvc
           mountPath: /var/lib/postgresql/data/
-        envFrom:
-          - configMapRef:
-              name: k8s-test-env
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: pg-connection
+                key: POSTGRES_DB
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pg-connection
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                key: POSTGRES_USER  
+                name: pg-connection
       volumes:
       - name: pg-data-pvc
         persistentVolumeClaim:
           claimName: pg-data-rw
+  
+#  Just for example purposes but this shouldn't be here
+#
+#  ks create secret generic pg-connection \
+#  --from-literal=POSTGRES_PASSWORD=superSecurePassword \
+#  --from-literal=POSTGRES_USER=dotnet \
+#  --from-literal=POSTGRES_DB=blogging \
+#  --from-literal=ConnectionStrings__Postgres_Db=Host=blogging-db\;Port=5432\;Database=blogging\;Username=dotnet\;Password=superSecurePassword\;
