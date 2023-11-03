@@ -477,4 +477,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-.pg-data/
+.pg-data/.env
+.pg-data
