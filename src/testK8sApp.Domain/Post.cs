@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace testk8sApp.Data;
+namespace testK8sApp.Domain;
 
 [Table("post")]
 public class Post

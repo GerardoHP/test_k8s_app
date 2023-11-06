@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using testK8sApp.Domain;
 
 namespace testk8sApp.Data;
 

@@ -38,6 +38,14 @@ builder.Services.AddDbContext<BloggingContext>(o => o.UseNpgsql(connStr));
 builder.Services.AddTransient<Client>();
 
 var app = builder.Build();
+#if DEBUG
+// Only use migrations on developmen services not on production environments
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<BloggingContext>();
+    db.Database.Migrate();
+}
+#endif
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

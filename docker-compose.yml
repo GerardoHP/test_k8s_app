@@ -1,8 +1,7 @@
 services: 
   develop_db:
     image: postgres:alpine3.18
-    profiles:
-      - development
+    profiles: [development]
     restart: always
     environment:
       POSTGRES_PASSWORD: example
@@ -15,6 +14,9 @@ services:
       - ./.pg-data:/var/lib/postgresql/data/
   go_service:
     image: gerardohp/testk8s_grpc
+    profiles: 
+      - development
+      - testing
     build:
       context: src/dateService/
       dockerfile: Dockerfile
@@ -22,6 +24,7 @@ services:
       - 8080:8080
   dotnet_service:
     image: gerardohp/testk8s_web
+    profiles: [testing]
     build:
       context: src/
       dockerfile: Web/Dockerfile
@@ -37,6 +40,7 @@ services:
       - go_service
   postgres_db:
     image: gerardohp/k8stest_db
+    profiles: [testing]
     build:
       context: src/
       dockerfile: ../database.Dockerfile
