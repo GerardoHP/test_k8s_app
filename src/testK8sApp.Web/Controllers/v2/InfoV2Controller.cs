@@ -22,7 +22,7 @@ public class InfoV2Controller : ControllerBase
         _info = info;
         _bloggingContext = bloggingContext;
     }
-    
+        
     [HttpGet("Version")]
     public IActionResult GetVersion()
     {
