@@ -30,11 +30,11 @@ public class AuthorController : ControllerBase
     [HttpGet("WithBooks")]
     public IActionResult GetAuthorsWithBooks()
     {
-        _logger.LogInformation("getting authors");
-        var authors = _bloggingContext
+            _logger.LogInformation("getting authors");
+                    var authors = _bloggingContext
             .Authors
             .Include(a => a.Books)
-            .ToList();
+                .ToList();
         
         return Ok(authors);
     }
