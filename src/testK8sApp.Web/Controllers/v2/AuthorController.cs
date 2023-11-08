@@ -1,7 +1,7 @@
 using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using testk8sApp.Data;
+using testK8sApp.Domain.Repositories;
 
 namespace testK8sApp.Web.Controllers.v2;
 
@@ -11,40 +11,50 @@ namespace testK8sApp.Web.Controllers.v2;
 public class AuthorController : ControllerBase
 {
     private readonly ILogger<AuthorController> _logger;
-    private readonly BloggingContext _bloggingContext;
+    private readonly IAuthorRepository _authorRepository;
+    private readonly IMapper _mapper;
 
-    public AuthorController(ILogger<AuthorController> logger, BloggingContext bloggingContext)
+    public AuthorController(ILogger<AuthorController> logger, IAuthorRepository authorRepository, IMapper mapper)
     {
         _logger = logger;
-        _bloggingContext = bloggingContext;
+        _authorRepository = authorRepository;
+        _mapper = mapper;
     }
 
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetAuthorById(int id)
+    {
+        _logger.LogInformation("getting author by id {Id} ", id);
+        var author = await _authorRepository.GetAuthorById(id);
+        var authorDto = _mapper.Map<Dto.Author>(author);
+        return Ok(authorDto);
+    }
+    
     [HttpGet]
-    public IActionResult GetAuthors()
+    public async Task<IActionResult> GetAuthors()
     {
         _logger.LogInformation("getting authors");
-        var authors = _bloggingContext.Authors.ToList();
-        return Ok(authors);
+        var authors = await _authorRepository.GetAuthors();
+        var authorsDto = _mapper.Map<List<Dto.Author>>(authors);
+        return Ok(authorsDto);
     }
 
     [HttpGet("WithBooks")]
-    public IActionResult GetAuthorsWithBooks()
+    public async Task<IActionResult> GetAuthorsWithBooks()
     {
-            _logger.LogInformation("getting authors");
-                    var authors = _bloggingContext
-            .Authors
-            .Include(a => a.Books)
-                .ToList();
-        
-        return Ok(authors);
+        _logger.LogInformation("getting authors");
+        var authors = await _authorRepository.GetAuthorsWithBooks();
+        var authorsDto = _mapper.Map<List<Dto.Author>>(authors);
+        return Ok(authorsDto);
     }
 
     [HttpPost]
-    public IActionResult PostAuthor(Author author)
+    public async Task<IActionResult> PostAuthor(Dto.Author authorDto)
     {
-        _logger.LogInformation("posting author ", author);
-        _bloggingContext.Authors.Add(author);
-        _bloggingContext.SaveChanges();
-        return Ok(author);
+        var author = _mapper.Map<Domain.Author>(authorDto);
+        author = await _authorRepository.Add(author);
+        _logger.LogInformation("posting author {Id} generated", author.Id);
+        authorDto = _mapper.Map<Dto.Author>(author);
+        return Ok(authorDto);
     }
 }

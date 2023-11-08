@@ -39,7 +39,7 @@ services:
       - postgres_db
       - go_service
   postgres_db:
-    image: gerardohp/k8stest_db
+    image: gerardohp/k8stest_db:1.1
     profiles: [testing]
     build:
       context: src/

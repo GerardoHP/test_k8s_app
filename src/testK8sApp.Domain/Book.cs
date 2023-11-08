@@ -1,4 +1,4 @@
-namespace testk8sApp.Data;
+namespace testK8sApp.Domain;
 
 public class Book
 {

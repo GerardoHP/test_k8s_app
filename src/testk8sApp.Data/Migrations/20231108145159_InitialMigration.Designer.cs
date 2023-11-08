@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using testk8sApp.Data;
+using testK8sApp.Data;
 
 #nullable disable
 
-namespace testK8sApp.Web.Migrations
+namespace testK8sApp.Data.Migrations
 {
-    [DbContext(typeof(BloggingContext))]
-    [Migration("20231106013237_CleanDataBase")]
-    partial class CleanDataBase
+    [DbContext(typeof(PublishingContext))]
+    [Migration("20231108145159_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,24 +25,7 @@ namespace testK8sApp.Web.Migrations
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
 
-            modelBuilder.Entity("testK8sApp.Domain.ProofOfLife", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProofOfLives");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("00000000-0000-0000-0000-000000000001")
-                        });
-                });
-
-            modelBuilder.Entity("testk8sApp.Data.Author", b =>
+            modelBuilder.Entity("testK8sApp.Domain.Author", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +46,7 @@ namespace testK8sApp.Web.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("testk8sApp.Data.Book", b =>
+            modelBuilder.Entity("testK8sApp.Domain.Book", b =>
                 {
                     b.Property<int>("BookId")
                         .ValueGeneratedOnAdd()
@@ -91,9 +74,26 @@ namespace testK8sApp.Web.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("testk8sApp.Data.Book", b =>
+            modelBuilder.Entity("testK8sApp.Domain.ProofOfLife", b =>
                 {
-                    b.HasOne("testk8sApp.Data.Author", "Author")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProofOfLives");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("00000000-0000-0000-0000-000000000001")
+                        });
+                });
+
+            modelBuilder.Entity("testK8sApp.Domain.Book", b =>
+                {
+                    b.HasOne("testK8sApp.Domain.Author", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -102,7 +102,7 @@ namespace testK8sApp.Web.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("testk8sApp.Data.Author", b =>
+            modelBuilder.Entity("testK8sApp.Domain.Author", b =>
                 {
                     b.Navigation("Books");
                 });
