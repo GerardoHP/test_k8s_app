@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: dotnet-service
-        image: gerardohp/testk8s_web
+        image: gerardohp/testk8s_web:1.3
         imagePullPolicy: IfNotPresent
         resources:
           limits:

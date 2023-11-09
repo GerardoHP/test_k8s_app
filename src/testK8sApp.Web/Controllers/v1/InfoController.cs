@@ -44,7 +44,7 @@ public class InfoController : ControllerBase
         var proofOfLife = await _proofOfLifeRepository.GetProofOfLife();
         if (proofOfLife)
         {
-            return NoContent();
+            return Ok();
         }
 
         return NotFound();
