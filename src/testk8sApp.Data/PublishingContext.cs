@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using testK8sApp.Domain;
 
-namespace testk8sApp.Data;
+namespace testK8sApp.Data;
 
-public class BloggingContext : DbContext
+public class PublishingContext : DbContext
 {
-    public BloggingContext(DbContextOptions<BloggingContext> options) :base(options){}
+    public PublishingContext(DbContextOptions<PublishingContext> options) :base(options){}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
