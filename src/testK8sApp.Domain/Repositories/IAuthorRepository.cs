@@ -9,4 +9,6 @@ public interface IAuthorRepository
     Task<List<Author>> GetAuthorsWithBooks();
 
     Task<Author> Add(Author author);
+
+    Task Delete(int id);
 }

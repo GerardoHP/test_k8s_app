@@ -19,7 +19,7 @@ public class InfoV2Controller : ControllerBase
     [HttpGet("Version")]
     public IActionResult GetVersion()
     {
-        _logger.LogInformation("api version {Version} hit", GetVersion());
+        _logger.LogInformation("api version {Version} hit", HttpContext.GetRequestedApiVersion());
         return Ok("version 2");
     }
 }

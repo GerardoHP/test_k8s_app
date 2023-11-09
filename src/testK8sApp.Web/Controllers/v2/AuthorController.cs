@@ -44,17 +44,25 @@ public class AuthorController : ControllerBase
     {
         _logger.LogInformation("getting authors");
         var authors = await _authorRepository.GetAuthorsWithBooks();
-        var authorsDto = _mapper.Map<List<Dto.Author>>(authors);
+        var authorsDto = _mapper.Map<List<Dto.AuthorWithBooks>>(authors);
         return Ok(authorsDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostAuthor(Dto.Author authorDto)
+    public async Task<IActionResult> PostAuthor(Dto.AuthorWithBooks authorDto)
     {
         var author = _mapper.Map<Domain.Author>(authorDto);
         author = await _authorRepository.Add(author);
         _logger.LogInformation("posting author {Id} generated", author.Id);
-        authorDto = _mapper.Map<Dto.Author>(author);
+        authorDto = _mapper.Map<Dto.AuthorWithBooks>(author);
         return Ok(authorDto);
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteAuthor(int id)
+    {
+        _logger.LogInformation("deleting author {Id} ", id);
+        await _authorRepository.Delete(id);
+        return NoContent();
     }
 }

@@ -4,7 +4,7 @@ using testK8sApp.Domain.Repositories;
 
 namespace testK8sApp.Data.Repositories;
 
-public class AuthorRepository:IAuthorRepository
+public class AuthorRepository : IAuthorRepository
 {
     private readonly PublishingContext _publishingContext;
 
@@ -40,5 +40,15 @@ public class AuthorRepository:IAuthorRepository
         var authorInserted = await _publishingContext.Authors.AddAsync(author);
         await _publishingContext.SaveChangesAsync();
         return authorInserted.Entity;
+    }
+
+    public async Task Delete(int id)
+    {
+        var author = await _publishingContext.Authors.FindAsync(id);
+        if (author != null)
+        {
+            _publishingContext.Authors.Remove(author);
+            await _publishingContext.SaveChangesAsync();
+        }
     }
 }
