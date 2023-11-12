@@ -32,7 +32,7 @@ namespace testK8sApp.Data.Migrations
                 table: "Books",
                 type: "timestamp with time zone",
                 nullable: false,
-                defaultValue: new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                defaultValue: new DateTime(2023, 1, 1, 6, 0, 0, 0, DateTimeKind.Utc));
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DELETED_AT",
@@ -52,7 +52,7 @@ namespace testK8sApp.Data.Migrations
                 table: "Authors",
                 type: "timestamp with time zone",
                 nullable: false,
-                defaultValue: new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                defaultValue: new DateTime(2023, 1, 1, 6, 0, 0, 0, DateTimeKind.Utc));
         }
 
         /// <inheritdoc />
