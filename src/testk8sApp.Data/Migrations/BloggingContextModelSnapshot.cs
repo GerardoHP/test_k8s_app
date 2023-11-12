@@ -51,7 +51,7 @@ namespace testK8sApp.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                        .HasDefaultValue(new DateTime(2023, 1, 1, 6, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("UPDATED_AT");
 
                     b.HasKey("Id");
@@ -93,7 +93,7 @@ namespace testK8sApp.Data.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                        .HasDefaultValue(new DateTime(2023, 1, 1, 6, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("UPDATED_AT");
 
                     b.HasKey("BookId");

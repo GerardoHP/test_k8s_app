@@ -11,7 +11,7 @@ public class AuthorMapping : IEntityTypeConfiguration<Author>
         builder
             .Property(a => a.UpdatedAt)
             .HasColumnName("UPDATED_AT")
-            .HasDefaultValue(new DateTime(2023, 1, 1))
+            .HasDefaultValue(new DateTime(2023, 1, 1).ToUniversalTime())
             .IsRequired();
         builder
             .Property(a => a.DeletedAt)
