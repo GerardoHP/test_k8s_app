@@ -85,7 +85,7 @@ spec:
         ports:
         - containerPort: 5432
         volumeMounts:
-        - name: pg-data-pvc
+        - name: pg-data-local
           mountPath: /var/lib/postgresql/data/
         env:
           - name: POSTGRES_DB
@@ -104,6 +104,10 @@ spec:
                 key: POSTGRES_USER  
                 name: pg-connection
       volumes:
+      - name: pg-data-local
+        hostPath:
+          path: /Users/gerardohernandez/Repos/tmp/store
+          type: DirectoryOrCreate
       - name: pg-data-pvc
         persistentVolumeClaim:
           claimName: pg-data-rw
