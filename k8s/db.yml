@@ -76,7 +76,7 @@ spec:
     spec:
       containers:
       - name: blogging-db
-        image: gerardohp/k8stest_db:1.1
+        image: gerardohp/k8stest_db:1.2
         imagePullPolicy: IfNotPresent
         resources:
           limits:

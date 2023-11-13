@@ -56,7 +56,6 @@ builder.Services.AddTransient<IAuthorRepository, AuthorRepository>();
 // #####
 
 var app = builder.Build();
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 #if DEBUG
 

@@ -9,6 +9,11 @@ public class AuthorMapping : IEntityTypeConfiguration<Author>
     public void Configure(EntityTypeBuilder<Author> builder)
     {
         builder
+            .HasMany(a => a.Books)
+            .WithOne(b => b.Author)
+            .HasForeignKey(b => b.AuthorId)
+            .IsRequired();
+        builder
             .Property(a => a.UpdatedAt)
             .HasColumnName("UPDATED_AT")
             .HasDefaultValue(new DateTime(2023, 1, 1).ToUniversalTime())
