@@ -26,12 +26,12 @@ public class AuditableInterceptor : SaveChangesInterceptor
 
             if (entry.State == EntityState.Deleted)
             {
-                auditable.DeletedAt = DateTime.Now;
+                auditable.DeletedAt = DateTime.UtcNow;
                 auditable.IsDeleted = true;
             }
             else
             {
-                auditable.UpdatedAt = DateTime.Now;
+                auditable.UpdatedAt = DateTime.UtcNow;
             }
             
             entry.State = EntityState.Modified;

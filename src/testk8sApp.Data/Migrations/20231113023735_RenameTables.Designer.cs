@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using testK8sApp.Data;
@@ -11,9 +12,11 @@ using testK8sApp.Data;
 namespace testK8sApp.Data.Migrations
 {
     [DbContext(typeof(PublishingContext))]
-    partial class BloggingContextModelSnapshot : ModelSnapshot
+    [Migration("20231113023735_RenameTables")]
+    partial class RenameTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -53,7 +53,7 @@ public class AuthorController : ControllerBase
     {
         var author = _mapper.Map<Domain.Author>(authorDto);
         author = await _authorRepository.Add(author);
-        _logger.LogInformation("posting author {Id} generated", author.Id);
+        _logger.LogInformation("posting author {Id} generated", author.AuthorId);
         authorDto = _mapper.Map<Dto.AuthorWithBooks>(author);
         return Ok(authorDto);
     }
