@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using testK8sApp.Domain.Interfaces;
 
@@ -19,7 +20,7 @@ public class AuditableInterceptor : SaveChangesInterceptor
     {
         if (eventData.Context is null) return ValueTask.FromResult(result);
 
-        foreach (var entry in eventData.Context.ChangeTracker.Entries())
+        foreach (EntityEntry entry in eventData.Context.ChangeTracker.Entries())
         {
             if (entry is not { Entity: IAuditable auditable}) continue;
             if (!_auditableStates.ContainsKey(entry.State)) continue;
