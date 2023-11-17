@@ -4,4 +4,4 @@ Test k8s application:
   - Dotnet REST api 
     - Support for ef core 
   - Postgres DB image with EF core migration script
-  - Go gRpc application
+  - Go gRpc applicationsmall change
