@@ -5,3 +5,4 @@ Test k8s application:
     - Support for ef core 
   - Postgres DB image with EF core migration script
   - Go gRpc applicationsmall change
+from windows
