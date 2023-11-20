@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using testK8sApp.Data.Interceptors;
 using testK8sApp.Data.Mappings;
 using testK8sApp.Domain;
@@ -7,11 +8,16 @@ namespace testK8sApp.Data;
 
 public class PublishingContext : DbContext
 {
-    public PublishingContext(DbContextOptions<PublishingContext> options) :base(options){}
-
+    public PublishingContext(DbContextOptions<PublishingContext> options)
+        : base(options)
+    {
+    }
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.AddInterceptors(new AuditableInterceptor());
+        optionsBuilder
+            .AddInterceptors(new AuditableInterceptor())
+            .LogTo(Console.WriteLine);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
