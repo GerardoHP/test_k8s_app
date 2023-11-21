@@ -41,7 +41,8 @@ public class AuditableInterceptor : SaveChangesInterceptor
             {
                 auditable.UpdatedAt = DateTime.UtcNow;
             }
-            
+
+            auditable.UpdatedBy = _user;
             entry.State = EntityState.Modified;
         }
 

@@ -23,6 +23,11 @@ public class BookMapping : IEntityTypeConfiguration<Book>
             .HasDefaultValue(false)
             .IsRequired();
         builder
+            .Property(b => b.UpdatedBy)
+            .HasColumnName("UPDATED_BY")
+            .HasDefaultValue("system")
+            .IsRequired();
+        builder
             .HasQueryFilter(b => !b.IsDeleted && !b.Author.IsDeleted);
     }
 }

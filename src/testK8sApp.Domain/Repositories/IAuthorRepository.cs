@@ -1,16 +1,8 @@
 namespace testK8sApp.Domain.Repositories;
 
-public interface IAuthorRepository
+public interface IAuthorRepository : IGenericRepository<Author>
 {
-    Task<Author?> GetAuthorById(int id);
-
-    Task<List<Author>> GetAuthors();
-
     Task<List<Author>> GetAuthorsWithBooks();
-
-    Task<Author> Add(Author author);
-
-    Task Delete(int id);
-
     Task<List<Author>> GetByAuthorName(string name);
+    Task<Author?> PatchAuthor(int id, Author author);
 }
