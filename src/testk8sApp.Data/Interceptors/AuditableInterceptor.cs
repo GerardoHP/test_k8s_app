@@ -7,11 +7,18 @@ namespace testK8sApp.Data.Interceptors;
 
 public class AuditableInterceptor : SaveChangesInterceptor
 {
+    private readonly string _user;
+    
     private readonly Dictionary<EntityState, bool> _auditableStates = new()
     {
         { EntityState.Deleted, true },
         { EntityState.Modified, true },
     };
+
+    public AuditableInterceptor(string user)
+    {
+        this._user = user;
+    }
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
         DbContextEventData eventData, 

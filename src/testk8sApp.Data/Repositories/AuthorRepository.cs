@@ -22,7 +22,6 @@ public class AuthorRepository : IAuthorRepository
     {
         return await _publishingContext
             .Authors
-            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -30,7 +29,6 @@ public class AuthorRepository : IAuthorRepository
     {
         return await _publishingContext
             .Authors
-            .AsNoTracking()
             .Include(a => a.Books)
             .ToListAsync();
     }
@@ -50,5 +48,13 @@ public class AuthorRepository : IAuthorRepository
             _publishingContext.Authors.Remove(author);
             await _publishingContext.SaveChangesAsync();
         }
+    }
+
+    public async Task<List<Author>> GetByAuthorName(string name)
+    {
+        return await _publishingContext
+            .Authors
+            .Where(a => a.FirstName.ToLower().Contains(name) || a.LastName.ToLower().Contains(name))
+            .ToListAsync();
     }
 }

@@ -11,4 +11,6 @@ public interface IAuthorRepository
     Task<Author> Add(Author author);
 
     Task Delete(int id);
+
+    Task<List<Author>> GetByAuthorName(string name);
 }

@@ -11,7 +11,7 @@ using testK8sApp.Data;
 namespace testK8sApp.Data.Migrations
 {
     [DbContext(typeof(PublishingContext))]
-    partial class BloggingContextModelSnapshot : ModelSnapshot
+    partial class PublishingContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

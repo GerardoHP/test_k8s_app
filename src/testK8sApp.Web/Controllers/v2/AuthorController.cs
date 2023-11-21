@@ -65,4 +65,13 @@ public class AuthorController : ControllerBase
         await _authorRepository.Delete(id);
         return NoContent();
     }
+
+    [HttpGet("GeAuthorsByName")]
+    public async Task<IActionResult> GetAuthors([FromQuery] string name)
+    {
+        _logger.LogInformation("getting authors by name {Name} ", name);
+        var authors = await _authorRepository.GetByAuthorName(name);
+        var authorsDto = _mapper.Map<List<Dto.Author>>(authors);
+        return Ok(authorsDto);
+    }
 }

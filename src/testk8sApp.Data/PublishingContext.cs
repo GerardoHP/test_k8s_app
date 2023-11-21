@@ -17,7 +17,14 @@ public class PublishingContext : DbContext
     {
         optionsBuilder
             .AddInterceptors(new AuditableInterceptor())
-            .LogTo(Console.WriteLine);
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+            .LogTo(
+                Console.WriteLine, 
+                new[]{ DbLoggerCategory.Database.Command.Name,  }, 
+                LogLevel.Information);
+#if DEBUG
+        optionsBuilder.EnableSensitiveDataLogging();
+#endif
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
