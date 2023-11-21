@@ -28,6 +28,11 @@ public class AuthorMapping : IEntityTypeConfiguration<Author>
             .HasDefaultValue(false)
             .IsRequired();
         builder
+            .Property(a => a.UpdatedBy)
+            .HasColumnName("UPDATED_BY")
+            .HasDefaultValue("system")
+            .IsRequired();
+        builder
             .HasQueryFilter(a => !a.IsDeleted);
     }
 }

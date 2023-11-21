@@ -11,7 +11,7 @@ using testK8sApp.Data;
 namespace testK8sApp.Data.Migrations
 {
     [DbContext(typeof(PublishingContext))]
-    partial class BloggingContextModelSnapshot : ModelSnapshot
+    partial class PublishingContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,13 @@ namespace testK8sApp.Data.Migrations
                         .HasDefaultValue(new DateTime(2023, 1, 1, 6, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("UPDATED_AT");
 
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("system")
+                        .HasColumnName("UPDATED_BY");
+
                     b.HasKey("AuthorId");
 
                     b.ToTable("Authors");
@@ -95,6 +102,13 @@ namespace testK8sApp.Data.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValue(new DateTime(2023, 1, 1, 6, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("UPDATED_AT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("system")
+                        .HasColumnName("UPDATED_BY");
 
                     b.HasKey("BookId");
 

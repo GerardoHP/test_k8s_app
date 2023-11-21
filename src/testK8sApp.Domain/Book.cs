@@ -13,6 +13,7 @@ public class Book : IAuditable
     public DateTime UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
     public bool IsDeleted { get; set; }
-    
+    public string UpdatedBy { get; set; }
+
     public virtual Author Author { get; set; }
 }

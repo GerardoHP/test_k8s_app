@@ -25,7 +25,7 @@ public class AuthorController : ControllerBase
     public async Task<IActionResult> GetAuthorById(int id)
     {
         _logger.LogInformation("getting author by id {Id} ", id);
-        var author = await _authorRepository.GetAuthorById(id);
+        var author = await _authorRepository.GetById(id);
         var authorDto = _mapper.Map<Dto.Author>(author);
         return Ok(authorDto);
     }
@@ -34,7 +34,7 @@ public class AuthorController : ControllerBase
     public async Task<IActionResult> GetAuthors()
     {
         _logger.LogInformation("getting authors");
-        var authors = await _authorRepository.GetAuthors();
+        var authors = await _authorRepository.GetAll();
         var authorsDto = _mapper.Map<List<Dto.Author>>(authors);
         return Ok(authorsDto);
     }
@@ -64,5 +64,40 @@ public class AuthorController : ControllerBase
         _logger.LogInformation("deleting author {Id} ", id);
         await _authorRepository.Delete(id);
         return NoContent();
+    }
+
+    [HttpGet("GeAuthorsByName")]
+    public async Task<IActionResult> GetAuthors([FromQuery] string name)
+    {
+        _logger.LogInformation("getting authors by name {Name} ", name);
+        var authors = await _authorRepository.GetByAuthorName(name);
+        var authorsDto = _mapper.Map<List<Dto.Author>>(authors);
+        return Ok(authorsDto);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateAuthor(int id, Dto.Author authorDto)
+    {
+        _logger.LogInformation("updating author {Id} ", id);
+        if (id != authorDto.Id)
+        {
+            return BadRequest();
+        }
+        
+        var author = _mapper.Map<Domain.Author>(authorDto);
+        author = await _authorRepository.Update(id, author);
+        authorDto = _mapper.Map<Dto.Author>(author);
+        return Ok(authorDto);
+    }
+    
+    [HttpPatch("{id:int}")]
+    public async Task<IActionResult> PatchAuthor(int id, Dto.AuthorPatch authorDto)
+    {
+        _logger.LogInformation("updating author {Id} ", id);
+        var author = _mapper.Map<Domain.Author>(authorDto);
+        author.AuthorId = id;
+        author = await _authorRepository.PatchAuthor(id, author);
+        authorDto = _mapper.Map<Dto.AuthorPatch>(author);
+        return Ok(authorDto);
     }
 }

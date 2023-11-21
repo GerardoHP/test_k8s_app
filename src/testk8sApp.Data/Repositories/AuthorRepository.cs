@@ -4,51 +4,38 @@ using testK8sApp.Domain.Repositories;
 
 namespace testK8sApp.Data.Repositories;
 
-public class AuthorRepository : IAuthorRepository
+public class AuthorRepository : GenericRepository<Author>, IAuthorRepository 
 {
     private readonly PublishingContext _publishingContext;
 
     public AuthorRepository(PublishingContext publishingContext)
+        :base(publishingContext)
     {
         _publishingContext = publishingContext;
     }
-
-    public async Task<Author?> GetAuthorById(int id)
-    {
-        return await _publishingContext.Authors.FindAsync(id);
-    }
-
-    public async Task<List<Author>> GetAuthors()
-    {
-        return await _publishingContext
-            .Authors
-            .AsNoTracking()
-            .ToListAsync();
-    }
-
+    
     public async Task<List<Author>> GetAuthorsWithBooks()
     {
         return await _publishingContext
             .Authors
-            .AsNoTracking()
             .Include(a => a.Books)
             .ToListAsync();
     }
 
-    public async Task<Author> Add(Author author)
+    public async Task<List<Author>> GetByAuthorName(string name)
     {
-        var authorInserted = await _publishingContext.Authors.AddAsync(author);
-        await _publishingContext.SaveChangesAsync();
-        return authorInserted.Entity;
+        return await _publishingContext
+            .Authors
+            .Where(a => a.FirstName.ToLower().Contains(name) || a.LastName.ToLower().Contains(name))
+            .ToListAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task<Author?> PatchAuthor(int id, Author author)
     {
-        var author = await _publishingContext.Authors.FindAsync(id);
-        if (author != null)
-        {
-            _publishingContext.Authors.Remove(author);
-            await _publishingContext.SaveChangesAsync();
-        }
+        var entity = await GetById(id);
+        if (entity is null) return entity;
+        entity.FirstName = string.IsNullOrEmpty(author.FirstName) ? entity.FirstName : author.FirstName;
+        entity.LastName = string.IsNullOrEmpty(author.LastName) ? entity.LastName : author.LastName;
+        return await Update(id, entity);
     }
 }
