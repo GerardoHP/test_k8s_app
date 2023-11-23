@@ -6,5 +6,3 @@ Test k8s application:
   - Postgres DB image with EF core migration script
   - Go gRpc applicationsmall change
 
-small change
-from windows
